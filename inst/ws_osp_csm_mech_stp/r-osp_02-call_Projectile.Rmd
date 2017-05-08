@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "Projectile class"
 output: html_notebook
 ---
 
@@ -7,8 +7,8 @@ output: html_notebook
 library(rJava)
 
 # this works with OSP source code but pointing to the bin folder
-ospClasses <- "C:/Users/msfz751/Desktop/git.public/java-opensourcephysics/2015PortableWS/osp/bin"
-ospClasses1 <- "C:/Users/msfz751/Desktop/git.public/java-opensourcephysics/2015PortableWS/osp_csm/bin"
+ospClasses <- "./osp/bin"
+ospClasses1 <- "./osp_csm/bin"
 .jinit()          # initialize Java-VM
 .jaddClassPath(ospClasses)
 .jaddClassPath(ospClasses1)
@@ -17,53 +17,61 @@ ospClasses1 <- "C:/Users/msfz751/Desktop/git.public/java-opensourcephysics/2015P
 
 
 ```{r}
+# Show methods
 projectile <- J("org.opensourcephysics.sip.ch03.Projectile")
 .jmethods(projectile)
 ```
 
 ```{r}
-.jfields(projectile)
+.jconstructors(projectile)
 ```
+
+```{r}
+p <- .jnew("org/opensourcephysics/sip/ch03/Projectile")
+.jmethods(p)
+```
+
+
+```{r}
+# Show fields
+.jfields(p)
+```
+
+
 
 ```{r}
 prj <- .jnew(projectile)
-```
-
-```{r}
-state <- rate <- .jcall(prj, "[D", "getState")
+state <- .jcall(prj, "V", "setState", as.double(0), as.double(1), as.double(2), as.double(3))
 state
-rate
-```
 
+.jcall(prj, "[D", "getState")
 
-
-```{r}
+rate <- c(0, 0, 0, 0)
 new_rate <- .jcall(prj, "V", "getRate", as.double(state), as.double(rate))
 new_rate
 ```
 
 ```{r}
-state_set <- .jcall(prj, "V", "setState", as.double(0), as.double(1), as.double(2), as.double(3))
-state_set
-```
 
-```{r}
-.jcall(prj, "[D", "getState")
 ```
 
 
 
 ```{r}
+# Open ProjectileApp
 .projectileApp <- J("org.opensourcephysics.sip.ch03.ProjectileApp")
 ```
 
 ```{r}
+# new instance
 projectileApp <- .jnew(.projectileApp)
 
 ```
 
 ```{r}
+# initialize class
 .jcall(projectileApp, "V", "initialize")
+
 ```
 
 
