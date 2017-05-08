@@ -1,0 +1,40 @@
+---
+title: "ch01 SinApp"
+output: html_notebook
+---
+
+
+```{r}
+library(rJava)
+
+# this works with OSP source code but pointing to the bin folder
+osp     <- "./osp/bin"
+osp_csm <- "./osp_csm/bin"
+.jinit()          # initialize Java-VM
+.jaddClassPath(osp)
+.jaddClassPath(osp_csm)
+.jclassPath()
+```
+
+```{r}
+# set model animation
+animation <- .jnew("org.opensourcephysics.sip.ch01.SHOView")
+
+# Bring OSP control panel
+OSPControl <- J("org.opensourcephysics.controls.OSPControl")
+
+# new control panel
+control <- new(OSPControl, animation)
+
+# add buttons to control panel
+control$addButton("startAnimation", "start")
+control$addButton("stopAnimation", "Stop")
+control$addButton("initializeAnimation", "Initialize")
+
+# initialize control panel with SHOView model
+animation$setControl(control)
+```
+
+
+
+
