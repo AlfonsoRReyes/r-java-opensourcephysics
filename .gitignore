@@ -1,0 +1,19 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+# Java excludes
+.settings
+.directory
+*.classpath
+.metadata
+.project
+*/bin/
+bin
+*.gif
+*.jpg
+*.css
+*.html
+*.properties
+*.class
+*.xml

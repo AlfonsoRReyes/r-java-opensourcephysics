@@ -1,0 +1,102 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(rJava)
+
+options(java.parameters="-Xmx1024m")
+# this works with OSP source code but pointing to the bin folder
+ospClasses <- "./osp/bin"
+ospClasses1 <- "./osp_csm/bin"
+# .jinit(parameters="-Xmx2048m")          # initialize Java-VM
+# .jpackage()
+# .jinit(parameters=getOption("java.parameters"))
+.jinit(parameters=c("-Xms2g","-Xmx4g"))
+.jaddClassPath(ospClasses)
+.jaddClassPath(ospClasses1)
+.jclassPath()
+```
+
+
+```{r}
+# this run the app
+projectileApp <- .jnew("org.opensourcephysics.sip.ch03.ProjectileApp")
+simulationControl <- J("org.opensourcephysics.controls.SimulationControl", "createApp", projectileApp)
+# simulationControl$createApp(projectileApp)
+```
+
+```{r}
+simulationControl <- J("org.opensourcephysics.controls.SimulationControl")
+simulationControl$createApp(.projectileApp)
+```
+
+
+
+```{r}
+.projectileApp <- J("org.opensourcephysics.sip.ch03.ProjectileApp")
+# projectileApp <- .jnew(.projectileApp)
+
+projectileApp <- new(.projectileApp)
+
+```
+
+```{r}
+# this call the Java simulation dialog
+.projectileApp <- J("org.opensourcephysics.sip.ch03.ProjectileApp")
+projectileApp <- .jnew(.projectileApp)
+
+simulationControl <- J("org.opensourcephysics.controls.SimulationControl")
+simulationControl$createApp(projectileApp)
+.jinit()
+
+```
+
+```{r}
+projectileApp <- .jnew("org.opensourcephysics.sip.ch03.ProjectileApp")
+.jcall(projectileApp, "V", "initialize")
+```
+
+```{r}
+simulationControl <- J("org.opensourcephysics.controls.SimulationControl")
+sim <- simulationControl$createApp(projectileApp)
+```
+
+
+```{r}
+.jcall(projectileApp, "V", "reset")
+```
+
+
+```{r}
+.jcall(projectileApp, "V", "doStep")
+```
+
+```{r}
+simulationControl <- J("org.opensourcephysics.controls.SimulationControl")
+# sim <- simulationControl$createApp(projectileApp)
+.jcall(simulationControl,, "createApp", "new", projectileApp)
+```
+
+
+```{r}
+.jinit()
+simulationControl <- J("org.opensourcephysics.controls.SimulationControl")
+sim <- simulationControl$createApp(projectileApp)
+```
+
+
+```{r}
+.simulationControl <- J("org.opensourcephysics.controls.SimulationControl")
+
+simulationControl <- .jcall(.simulationControl)
+```
+
+
+
+```{r}
+library("rJava"); .jinit(); .jcall("java/lang/System", "S", "getProperty", "java.runtime.version")
+```
+
