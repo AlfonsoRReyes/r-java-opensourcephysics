@@ -1,7 +1,14 @@
 ---
-title: "R Notebook"
+title: "Ch03 ProjectileApp"
 output: html_notebook
 ---
+
+```{r}
+# Get the Java version
+library("rJava"); 
+.jinit(); 
+.jcall("java/lang/System", "S", "getProperty", "java.runtime.version")
+```
 
 
 ```{r}
@@ -28,29 +35,14 @@ simulationControl <- J("org.opensourcephysics.controls.SimulationControl", "crea
 # simulationControl$createApp(projectileApp)
 ```
 
-```{r}
-simulationControl <- J("org.opensourcephysics.controls.SimulationControl")
-simulationControl$createApp(.projectileApp)
-```
-
-
 
 ```{r}
-.projectileApp <- J("org.opensourcephysics.sip.ch03.ProjectileApp")
-# projectileApp <- .jnew(.projectileApp)
-
-projectileApp <- new(.projectileApp)
-
-```
-
-```{r}
-# this call the Java simulation dialog
+# this also call the Java simulation dialog
 .projectileApp <- J("org.opensourcephysics.sip.ch03.ProjectileApp")
 projectileApp <- .jnew(.projectileApp)
 
 simulationControl <- J("org.opensourcephysics.controls.SimulationControl")
 simulationControl$createApp(projectileApp)
-.jinit()
 
 ```
 

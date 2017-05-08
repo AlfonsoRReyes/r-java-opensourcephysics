@@ -29,6 +29,7 @@ public class SHOView extends AbstractAnimation {
   DrawingFrame drawingFrame = new DrawingFrame("SHO Simulation", drawing);
   Dataset stripChart = new Stripchart(20, 10); // strip chart of x(t)
   SHOModel sho = new SHOModel();               // harmonic oscillator
+  public double myVar = 0.0;
 
   /**
    * Constructs SHOView.
@@ -68,6 +69,8 @@ public class SHOView extends AbstractAnimation {
     drawing.setMessage("t="+decimalFormat.format(sho.getTime()));
     drawing.repaint();
     plot.repaint();
+    System.out.format("%12f %12f \n", sho.getTime(), sho.getX());
+    myVar = sho.getX();
   }
 
   /**

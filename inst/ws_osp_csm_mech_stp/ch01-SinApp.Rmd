@@ -1,0 +1,43 @@
+---
+title: "ch01 SinApp"
+output: html_notebook
+---
+
+
+```{r}
+library(rJava)
+
+# this works with OSP source code pointing to the bin folder (.class files)
+osp     <- "./osp/bin"
+osp_csm <- "./osp_csm/bin"
+.jinit()          # initialize Java-VM
+.jaddClassPath(osp)
+.jaddClassPath(osp_csm)
+.jclassPath()
+```
+
+
+
+
+```{r}
+plot <- .jnew("org.opensourcephysics.display.PlottingPanel", "Time", "Amp", "Sin Function")
+DrawingFrame <- J("org.opensourcephysics.display.DrawingFrame")
+.jconstructors(DrawingFrame)
+
+frame <- new(DrawingFrame, plot)
+dataset <- .jnew("org.opensourcephysics.display.Dataset")
+plot$addDrawable(dataset)
+
+
+t <- 0
+dt <- 0.01
+
+while (t < 2) {
+    dataset$append(as.double(t), as.double(sin(pi * t)))
+    t <- t + dt
+}
+
+frame$setVisible(TRUE)
+
+```
+
