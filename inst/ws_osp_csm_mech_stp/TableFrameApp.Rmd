@@ -1,0 +1,34 @@
+---
+title: "TableFrame"
+output: html_notebook
+---
+
+```{r}
+library(rJava)
+
+# this works with OSP source code but pointing to the bin folder
+ospClasses <- "./osp/bin"
+.jinit()          # initialize Java-VM
+.jaddClassPath(ospClasses)
+.jclassPath()
+```
+
+
+```{r}
+tf <- .jnew("org/opensourcephysics/frames/TableFrame", "TableFrame")
+tf$setRowNumberVisible(FALSE)
+tf$setColumnNames(as.integer(1), "x")
+tf$setColumnNames(as.integer(2), "sqrt(x)")
+tf$setColumnNames(as.integer(3), "cube root(x)")
+tf$setName("one")
+
+for (i in seq(0, 10, 1)) {
+    tf$appendRow(c(i, sqrt(i), i^(1/3)))
+}
+tf$appendRow(c(1,2,3))
+tf$appendRow(c(3,4,5))
+# tf$appendRow(matrix(1:5, nrow = 1))
+tf$setVisible(TRUE)
+```
+
+
