@@ -1,0 +1,176 @@
+---
+title: "ch02 CalculationApp"
+output: html_notebook
+---
+
+
+```{r}
+library(testthat)
+library(rJava)
+
+# this works with OSP source code but pointing to the bin folder
+osp     <- "./osp/bin"
+osp_csm <- "./osp_csm/bin"
+.jinit()          # initialize Java-VM
+.jaddClassPath(osp)
+.jaddClassPath(osp_csm)
+.jclassPath()
+```
+
+This application not working yet. A little bit complicated because of the abstract class.
+I did some instrospection below.
+
+```{r}
+# This is a test set for AbstractCalculation
+test_that("AbstractCalculation has constructor, methods", {
+    abstract <- J("org.opensourcephysics.controls.AbstractCalculation")
+    mets <- .jmethods(abstract)
+    expect_equal(length(.jmethods(abstract)), 19)
+    print(mets[grepl("AbstractCalculation", mets)])
+    expect_equal(length(mets[grepl("AbstractCalculation", mets)]), 10)
+})
+```
+
+
+```{r}
+# test set for CalculationControl
+test_that("CalculationControl has constructor and methods", {
+    calculation <- J("org.opensourcephysics.controls.CalculationControl")
+    # calc <- calculationControl$createApp(abstract)
+    res <- .jmethods(calculation)
+    expect_equal(length(.jmethods(calculation)), 395)
+    expect_true(grepl("CalculationControl", .jconstructors(calculation)))
+    expect_equal(length(names(calculation)), 49)
+    expect_error(calculationControl <- new(calculation), "java.lang.NoSuchMethodException: org.opensourcephysics.controls.CalculationControl.<init>()")
+    print(res[grepl("CalculationControl", res)])
+    expect_equal(length(res[grepl("CalculationControl", res)]), 3)
+})
+```
+
+```{r}
+abKls <- abstract$class
+abKls$getCanonicalName()
+```
+
+
+```{r}
+setClass("CalculationApp", slots = c(
+    test = "numeric"
+))
+
+setGeneric("calculate", function(object, ...) standardGeneric("calculate"))
+
+setMethod("calculate", "CalculationApp", function(object) {
+    
+})
+
+CalculationApp <- function() new("CalculationApp")
+
+```
+
+
+```{r}
+calculation$createApp(CalculationApp)
+```
+
+
+```{r}
+calculationControl <- .jnew(calculation, "createApp")
+```
+
+
+```{r}
+calc <- J("org.opensourcephysics.controls.Calculation")
+
+calculation <- new (calc, "createApp")
+```
+
+```{r}
+calc <- J("org.opensourcephysics.controls.AbstractCalculation")
+
+
+.jconstructors(calc)
+# [1] "public org.opensourcephysics.controls.AbstractCalculation()"
+
+# app <- new(calc, "AbstractCalculation", "CalculationControl")
+```
+
+```{r}
+abstract <- calc$class
+```
+
+
+
+
+
+```{r}
+CalculationControl <- new(calc, "createApp")
+```
+
+```{r}
+calc <- J("org.opensourcephysics.controls.Calculation")
+```
+
+```{r}
+abstractNew <- new(calc)
+```
+
+
+
+```{r}
+# Bring OSP control panel
+calculationControl <- J("org.opensourcephysics.controls.CalculationControl")
+```
+
+
+```{r}
+calculationControl$createApp(calc)
+```
+
+
+```{r}
+calc$createApp()
+```
+
+
+```{r}
+AbstractCalculation <- new(abstract, "AbstractCalculation")
+```
+
+
+```{r}
+.jconstructors(abstract)
+```
+
+
+
+
+```{r}
+# set model animation
+animation <- .jnew("org.opensourcephysics.sip.ch01.SHOView")
+.jfields(animation)
+```
+
+
+
+```{r}
+
+
+# Bring OSP control panel
+OSPControl <- J("org.opensourcephysics.controls.OSPControl")
+
+# new control panel
+control <- new(OSPControl, animation)
+
+# add buttons to control panel
+control$addButton("startAnimation", "start")
+control$addButton("stopAnimation", "Stop")
+control$addButton("initializeAnimation", "Initialize")
+
+# initialize control panel with SHOView model
+animation$setControl(control)
+```
+
+
+
+
