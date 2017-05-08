@@ -7,7 +7,7 @@ output: html_notebook
 ```{r}
 library(rJava)
 
-# this works with OSP source code but pointing to the bin folder
+# this works with OSP source code pointing to the bin folder (.class files)
 osp     <- "./osp/bin"
 osp_csm <- "./osp_csm/bin"
 .jinit()          # initialize Java-VM
