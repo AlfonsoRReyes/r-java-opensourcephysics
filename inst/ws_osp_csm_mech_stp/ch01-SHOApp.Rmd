@@ -15,10 +15,17 @@ osp_csm <- "./osp_csm/bin"
 .jaddClassPath(osp_csm)
 .jclassPath()
 ```
-
 ```{r}
 # set model animation
 animation <- .jnew("org.opensourcephysics.sip.ch01.SHOView")
+.jfields(animation)   # added this public variable in the class for testing
+```
+
+The control panel and animation will open but when they are closed, R is terminated.
+
+What I am doing in the meantime (in RStudio), until finding a solution, is to go to "Session" and select "Restart R".
+
+```{r}
 
 # Bring OSP control panel
 OSPControl <- J("org.opensourcephysics.controls.OSPControl")
