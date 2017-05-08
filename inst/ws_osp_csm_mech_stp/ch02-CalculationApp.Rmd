@@ -17,8 +17,20 @@ osp_csm <- "./osp_csm/bin"
 .jclassPath()
 ```
 
-This application not working yet. A little bit complicated because of the abstract class.
-I did some instrospection below.
+## Notes
+
+* I have modified the original `CalculationApp.java` and remove the main function.
+* To prevent a sudden crash of R when closing the control panel dialog, prefer to restart R instead. Go to "Session", "Restart R".
+* The goal here is to be able to add buttons and change the input boxes from R.
+
+
+```{r}
+calculationApp <- .jnew("org.opensourcephysics.sip.ch02.CalculationApp")
+calculationControl <- J("org.opensourcephysics.controls.CalculationControl", "createApp", calculationApp)
+```
+
+
+Find some instrospection below.
 
 ```{r}
 # This is a test set for AbstractCalculation
@@ -47,10 +59,15 @@ test_that("CalculationControl has constructor and methods", {
 })
 ```
 
-```{r}
-abKls <- abstract$class
-abKls$getCanonicalName()
-```
+
+
+
+
+
+
+
+
+
 
 
 ```{r}
