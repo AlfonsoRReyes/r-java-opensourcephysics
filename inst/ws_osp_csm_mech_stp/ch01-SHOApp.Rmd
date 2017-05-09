@@ -3,6 +3,8 @@ title: "ch01 SinApp"
 output: html_notebook
 ---
 
+Example from Chapter 1 of book "Computer Simulation Methods".
+
 
 ```{r}
 library(rJava)
